@@ -3,9 +3,107 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#070706" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>FOMO Night Bets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@360;450;600;750&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 </head>
 <body>
-  <p>placeholder</p>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <div class="eyebrow">Drake · Oct 1 drop</div>
+        <h1>FOMO <em>night bets.</em></h1>
+        <p class="sub">You each lock picks. After the songs hit streaming, mark what actually happened. Most correct wins and chooses the punishment.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="bar">
+        <div><span id="liveDot" class="dot"></span><span id="liveLabel">Local room</span></div>
+        <div id="roomLabel" class="tiny">No room yet</div>
+      </div>
+      <div class="score" style="margin-top:14px">
+        <div>
+          <span class="tiny" id="nameA">Player A</span>
+          <b id="scoreA">0</b>
+        </div>
+        <div class="vs">VS</div>
+        <div>
+          <span class="tiny" id="nameB">Player B</span>
+          <b id="scoreB">0</b>
+        </div>
+      </div>
+      <p class="notice" id="statusLine" style="margin:14px 0 0">Start a room, then share the link.</p>
+    </div>
+    <section class="card">
+      <div class="eyebrow">Setup</div>
+      <div class="row" style="margin-top:12px">
+        <div class="grow">
+          <label>Your name</label>
+          <input id="nameAInput" placeholder="Anthony" />
+        </div>
+        <div class="grow">
+          <label>Her name</label>
+          <input id="nameBInput" placeholder="Her name" />
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button id="createBtn">Start room</button>
+        <button class="ghost" id="shareBtn" type="button">Copy link</button>
+      </div>
+      <p class="notice" style="margin:12px 0 0">Open the same link on both phones. Each person taps their name, makes picks, then locks.</p>
+    </section>
+    <section class="card">
+      <div class="eyebrow">Who is using this phone?</div>
+      <div class="pills" style="margin-top:12px">
+        <button class="pill" id="seatABtn" type="button">I'm Player A</button>
+        <button class="pill" id="seatBBtn" type="button">I'm Player B</button>
+      </div>
+      <p class="tiny" id="seatNote" style="margin:10px 0 0">Choose a side before picking.</p>
+    </section>
+    <section class="card">
+      <div class="eyebrow">The bets</div>
+      <p class="notice" style="margin:8px 0 0">8 questions. Hidden from the other person until both lock.</p>
+      <div id="bets"></div>
+      <div class="sticky">
+        <button id="lockBtn">Lock my picks</button>
+        <button class="ghost" id="unlockHint" type="button">Need all 8</button>
+      </div>
+    </section>
+    <section class="card">
+      <div class="eyebrow">What actually dropped</div>
+      <p class="notice">Fill this in together after you hear the official streaming release.</p>
+      <div id="answers"></div>
+      <button id="lockAnswersBtn" style="margin-top:12px">Lock official answers & score</button>
+    </section>
+    <section id="resultCard" class="card hidden">
+      <div class="eyebrow">Result</div>
+      <h2 id="winnerLine" style="font-family:Fraunces,serif;margin:8px 0 6px;font-size:28px;">Waiting</h2>
+      <p class="notice" id="winnerSub"></p>
+      <div id="breakdown"></div>
+    </section>
+    <section class="card winner">
+      <div class="eyebrow">Punishment</div>
+      <p class="notice">Winner writes it. Loser has to live with it.</p>
+      <div class="pills" style="margin:12px 0">
+        <button class="pill" type="button" data-punish="Winner picks dinner.">Dinner</button>
+        <button class="pill" type="button" data-punish="Winner owns aux for 24 hours.">Aux for 24h</button>
+        <button class="pill" type="button" data-punish="Loser watches the FOMO film again, no skipping.">Rewatch FOMO</button>
+        <button class="pill" type="button" data-punish="Winner plans the next date.">Next date</button>
+        <button class="pill" type="button" data-punish="Loser has to defend their worst Drake take out loud.">Drake take</button>
+      </div>
+      <label>Custom punishment</label>
+      <textarea id="punishInput" placeholder="Be specific..."></textarea>
+      <div class="row" style="margin-top:10px">
+        <button id="savePunishBtn">Save official punishment</button>
+      </div>
+      <p id="punishFinal" class="notice" style="margin-top:12px"></p>
+    </section>
+  </div>
+  <script src="./app.js"></script>
 </body>
 </html>
